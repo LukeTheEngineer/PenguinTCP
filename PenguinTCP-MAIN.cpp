@@ -15,7 +15,7 @@
 
 
 int main(){
-    const unsigned short CONSTANT_PORT; //1234;
+    const unsigned short CONSTANT_PORT = 1234;
 
     std::shared_ptr<boost::asio::io_context> io_context_ptr = Penguin::Server::InitializeServer(CONSTANT_PORT);
 
