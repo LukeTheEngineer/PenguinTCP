@@ -2,21 +2,21 @@ PENGUIN_TCP
 PENGUIN_TCP is a C++ project that provides a basic TCP server implementation using the Boost.Asio library. It allows users to create a server that can accept connections from multiple clients and handle data sent by those clients.
 
 Requirements
-**To build and run PENGUIN_TCP, you will need the following:
+**To build and run PENGUIN_TCP, you will need the following:**
+**Boost libraries (1.74 or earlier)**
+**GNU Compiler Collection or any other working compiler**
+**dated OS**
 
-**Boost libraries (1.74 or earlier)
-GNU Compiler Collection or any other working compiler
-Updated OS
 Building the Project
 To build the project, follow these steps:
 
-**Clone the project repository to your local machine.
+**Clone the project repository to your local machine.**
 
-**Open a terminal or command prompt and navigate to the root directory of the cloned repository.
+**Open a terminal or command prompt and navigate to the root directory of the cloned repository.**
 
-**Compile the project using the following command: g++ -std=c++20 -I /BOOST_INSTALL_DIR -I WORKFOLDER -o PenguinNET PenguinTCP-MAIN.cpp Session.cpp Server.cpp -lboost_system -lboost_thread
+**Compile the project using the following command: g++ -std=c++20 -I /BOOST_INSTALL_DIR -I WORKFOLDER -o PenguinNET PenguinTCP-MAIN.cpp Session.cpp Server.cpp -lboost_system -lboost_thread**
 
-**Replace /BOOST_INSTALL_DIR with the path to your Boost installation directory, and WORKFOLDER with the path to the folder where the source files are located.
+**Replace /BOOST_INSTALL_DIR with the path to your Boost installation directory, and WORKFOLDER with the path to the folder where the source files are located.**
 
 This command will compile the source files into a binary executable named PenguinNET.
 
