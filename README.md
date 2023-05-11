@@ -18,6 +18,8 @@ To build the project, follow these steps:
 
 **Replace /BOOST_INSTALL_DIR with the path to your Boost installation directory, and WORKFOLDER with the path to the folder where the source files are located.**
 
+**ADD THE LOCATION FOR THE BOOST CHRONO, THREAD, AND SYSTEM LIB FILES INTO THE CMAKELISTS.**
+
 This command will compile the source files into a binary executable named PenguinNET.
 
 Using the Project
