@@ -1,11 +1,11 @@
 //Boost includes
 #include<boost/asio.hpp>
-
+#include<boost/chrono.hpp>
+#include<boost/thread.hpp>
 
 //System includes
 #include<iostream>
 #include<memory>
-
 
 
 namespace Penguin{
@@ -78,11 +78,63 @@ namespace Penguin{
                 Penguin::Server serverINIT(*io_context_ptr, port);
                 std::cout << "\nInitialized server on port: " << port << std::endl;
                 io_context_ptr->run();
-            } catch(const std::exception& ec) {
-                const char* Server_Exc = ec.what();
-                std::cerr << "server exception: " << Server_Exc;
+            } catch(const boost::system::system_error& ex) {
+                std::cerr << "Boost system error: " << ex.what() << std::endl;
+                throw;
+            } catch(const std::exception& ex) {
+                std::cerr << "Standard exception: " << ex.what() << std::endl;
+                throw;
+            } catch(...) {
+                std::cerr << "Unknown exception." << std::endl;
+                throw;
             }
             // Return a shared pointer to the io_context object
+            return io_context_ptr;
+        }
+
+    //Initialize server using a shared pointer and with a specified amount of time.
+        static inline std::shared_ptr<boost::asio::io_context> InitializeChronoServer(const unsigned short& port, unsigned short specTime)
+        {
+            std::shared_ptr<boost::asio::io_context> io_context_ptr = std::make_shared<boost::asio::io_context>();
+            try {
+                // Create the server object
+                Penguin::Server serverINIT(*io_context_ptr, port);
+
+                // Create the time functionality
+                boost::chrono::duration<int> duration(specTime);
+                auto std_duration = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::duration<int, std::milli>(duration.count()));
+
+                std::cout << "Initializing server on port: " << port << "..." << std::endl;
+
+                // Wait for a short time before continuing
+                boost::chrono::seconds wait_time{3};
+                boost::this_thread::sleep_for(wait_time);
+
+
+                // Run the event loop for the specified duration
+                do {
+                    std::cout << "\nInitialized server on port: " << port << std::endl;
+                } while (io_context_ptr->run_for(std_duration));
+                // Count down from the duration in seconds to 0
+                for (int i = std_duration.count() / 1000; i >= 0; --i) {
+                    std::cout << i << " seconds remaining" << std::endl;
+
+                    // Wait for 1 second
+                    std::this_thread::sleep_for(std::chrono::seconds(1));
+                }
+
+                std::cout << "Server cleaned up." << std::endl;
+
+            } catch (const boost::system::system_error& ex) {
+                std::cerr << "Boost system error: " << ex.what() << std::endl;
+                throw;
+            } catch (const std::exception& ex) {
+                std::cerr << "Standard exception: " << ex.what() << std::endl;
+                throw;
+            } catch (...) {
+                std::cerr << "Unknown exception." << std::endl;
+                throw;
+            }
             return io_context_ptr;
         }
 
